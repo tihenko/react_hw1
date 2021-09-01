@@ -2,11 +2,15 @@ import './App.css';
 import { useReducer } from "react";
 
 const reducer = (state =0, action) => {
-  switch (action) {
+  const {type, payload} = action;
+
+  switch (type) {
     case '+':
-      return state + 10;
+      return state + payload;
+
     case '-':
-      return state - 2;
+      return state - payload;
+
     default:
       return state
   }
@@ -19,8 +23,12 @@ export default function App() {
   return (
       <div>
         <h1>{state}</h1>
-        <button onClick={() => dispatch('+')}>dispatch</button>
-        <button onClick={() => dispatch('-')}>dispatch</button>
+        <button onClick={() => dispatch({ type: '+', payload: 10 })}>+10</button>
+        <button onClick={() => dispatch({ type: '+', payload: 5 })}>+5</button>
+        <button onClick={() => dispatch({ type: '+', payload: 1 })}>+1</button>
+        <button onClick={() => dispatch({ type: '-', payload: 1 })}>-1</button>
+        <button onClick={() => dispatch({ type: '-', payload: 5 })}>-5</button>
+        <button onClick={() => dispatch({ type: '-', payload: 10 })}>-10</button>
       </div>
   );
 }
