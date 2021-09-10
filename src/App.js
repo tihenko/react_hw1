@@ -1,49 +1,48 @@
 import './App.css';
-import { useReducer } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { useEffect } from "react";
+// import { addUser, loadUsers } from "./redux/actionCreaters";
+// import { getUsers, saveUser } from "./services/api.service";
+//
+//
+//
+//
+//
+//
+// export default function App() {
+//
+//   let state = useSelector(state => state)
+//   let dispatch = useDispatch();
+//   let { users } = state
+//
+//   useEffect(async () => {
+//     let response = await getUsers();
+//     dispatch(loadUsers(response))
+//   }, [])
+//
+//   let handleAddUsers = async (e) => {
+//     let user = { name: 'vasya' }
+//     saveUser(dispatch, user);
+//
+//
+//   }
+//
+//   return (
+//       <div>
+//         <button onClick={handleAddUsers}>add user</button>
+//         {
+//           users.map(value => <div>{value.name}</div>)
+//         }
+//       </div>
+//   )
+//
+// }
 
-const reducer = (state = {a: 0, b: 0, c: 0}, action) => {
-  const {type, payload} = action;
-
-  switch (type) {
-    case '+a':
-      return {...state, a: state.a + payload};
-
-    case '-a':
-      return {...state, a: state.a - payload};
-
-    case '+b':
-      return {...state, b: state.b + payload};
-
-    case '-b':
-      return {...state, b: state.b - payload};
-
-    case '+c':
-      return {...state, c: state.c + payload};
-
-    case '-c':
-      return {...state, c: state.c - payload};
-
-
-    default:
-      return state
-  }
-
-}
 
 export default function App() {
-  const [{a, b, c}, dispatch] = useReducer(reducer, {a: 0, b: 0, c: 0});
-
   return (
       <div>
-        <h1> a {a}</h1>
-        <button onClick={() => dispatch({ type: '+a', payload: 1 })}>+1</button>
-        <button onClick={() => dispatch({ type: '-a', payload: 1 })}>-1</button>
-        <h1> b {b}</h1>
-        <button onClick={() => dispatch({ type: '+b', payload: 1 })}>+1</button>
-        <button onClick={() => dispatch({ type: '-b', payload: 1 })}>-1</button>
-        <h1> c {c}</h1>
-        <button onClick={() => dispatch({ type: '+c', payload: 1 })}>+1</button>
-        <button onClick={() => dispatch({ type: '-c', payload: 1 })}>-1</button>
+
       </div>
   );
 }
