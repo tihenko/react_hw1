@@ -1,48 +1,45 @@
 import './App.css';
-// import { useDispatch, useSelector } from "react-redux";
-// import { useEffect } from "react";
-// import { addUser, loadUsers } from "./redux/actionCreaters";
-// import { getUsers, saveUser } from "./services/api.service";
-//
-//
-//
-//
-//
-//
-// export default function App() {
-//
-//   let state = useSelector(state => state)
-//   let dispatch = useDispatch();
-//   let { users } = state
-//
-//   useEffect(async () => {
-//     let response = await getUsers();
-//     dispatch(loadUsers(response))
-//   }, [])
-//
-//   let handleAddUsers = async (e) => {
-//     let user = { name: 'vasya' }
-//     saveUser(dispatch, user);
-//
-//
-//   }
-//
-//   return (
-//       <div>
-//         <button onClick={handleAddUsers}>add user</button>
-//         {
-//           users.map(value => <div>{value.name}</div>)
-//         }
-//       </div>
-//   )
-//
-// }
+import { useEffect } from "react";
+import { addUser, loadUsers } from "./redux/actionCreaters";
+import { useDispatch } from "react-redux";
 
+const fetchUsersWithThunk = () => async (dispatch) => {
+  const response = await (await fetch('https://jsonplaceholder.typicode.com/users')).json();
+  dispatch(loadUsers(response));
+}
+
+const addUserWithThunk = (userData) => async (dispatch) => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+    method: 'POST',
+
+    headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      name: userData.name
+
+    })
+  })
+  const savedUser = await response.json();
+  dispatch(addUser(savedUser))
+}
 
 export default function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsersWithThunk());
+  }, [dispatch]);
+
+  const xxx = () => {
+    const user = { name: 'vasya' };
+    dispatch(addUserWithThunk(user));
+  }
+
   return (
       <div>
-
+        <button onClick={xxx}>save user</button>
       </div>
   );
 }
