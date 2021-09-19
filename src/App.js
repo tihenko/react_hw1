@@ -27,7 +27,6 @@ const reducer = (state = {a: 0, b: 0, c: 0}, action) => {
     default:
       return state
   }
-
 }
 
 export default function App() {
