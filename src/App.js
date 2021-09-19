@@ -23,7 +23,6 @@ const reducer = (state = {a: 0, b: 0, c: 0}, action) => {
     case '-c':
       return {...state, c: state.c - payload};
 
-
     default:
       return state
   }
