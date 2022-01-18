@@ -1,6 +1,7 @@
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddTodos, setLoadingFalse, setLoadingTrue } from "../redux/actionCreaters";
+import { Todo } from "./Todo";
 
 export const Todos = () => {
   const { todos, todosLoading, newTodo } = useSelector(store => store.todosReducer);
@@ -23,19 +24,34 @@ export const Todos = () => {
     fetchTodos();
   }, [newTodo])
 
+  const updateTodo = async (id) => {
+    await fetch(`http://localhost:8888/update-todo/${id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({title:'pisq', description:'12331231'}),
+          headers: {
+            'Content-type': 'application/json'
+          }
+        }
+    )
+  }
+
+  const deleteTodoById = async (id) => {
+    await fetch(`http://localhost:8888/delete-todo/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    await fetchTodos();
+  }
+
   if (todosLoading) return <h1>LOADING...</h1>
 
   return (
       <div>
-        {todos.map(todo => (
-            <Fragment key={todo.id}>
-              <div>{todo.title}</div>
-              <div>{todo.description}</div>
-              <div>Created At: {new Date(todo.createdAt).toDateString()}</div>
-              <div>Status {todo.completed.toString()}</div>
-              <hr/>
-            </Fragment>
-        ))}
+        {
+          todos.map(todo => <Todo key={todo.id} todo={todo} deleteTodoById={deleteTodoById} updateTodo={updateTodo}/>)
+        }
       </div>
   )
 }
